@@ -1,4 +1,4 @@
-let baseURL = "https://special-space-halibut-g9xpqgpwrr2w9v7-5500.app.github.dev/";
+let baseURL = "https://mertcelen.github.io/atama";
 let cities = [
     "Tüm Türkiye",
     "Adana",
