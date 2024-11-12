@@ -13,22 +13,21 @@
         cursor: pointer;
       }
     </style>
-    <title>Kovid Sayar</title>
+    <title>Atama Yardımcısı</title>
 </head>
 <body>
     <div class="row" style="margin:20px;">
         <div class="col-md-9">
-            <h1>Kovid Sayar</h1>
+            <h1>Atama Yardımcısı</h1>
         </div>
-        <div class="col-md-3" style="text-align: right;">
-            Kaynak Kod : <a href="https://github.com/mertcelen/kovidsayar" target="_blank">GitHub</a> <br>
-            Veri Kaynağı : <a href="https://covid19.saglik.gov.tr/" target="_blank">Sağlık Bakanlığı</a> <br>
-            Nüfus Sayısı Kaynağı : <a href="https://tuikweb.tuik.gov.tr/PreIstatistikTablo.do?istab_id=1590" target="_blank">TUİK</a> <br>
+        <div class="col-md-3" style="text-align: right;margin-left:auto;margin-right:auto;">
+            Kaynak Kod : <a href="https://github.com/mertcelen/atama" target="_blank">GitHub</a> <br>
+            Veri Kaynağı : <a href="https://meb.gov.tr/" target="_blank">Milli Eğitim Bakanlığı</a> <br>
         </div>
     </div>
     <div class="row" style="margin:20px;">
-        <div class="col-md-8">
-          <h4>Harita Tarihi</h4>
+        <div class="col-md-9" style="margin-left:auto;margin-right:auto;">
+          <h4>Bölüm</h4>
             <select class="form-select" id="datesSelect" onchange="showDateDetails()"></select><br>
             <div class="svg-turkiye-haritasi">
                 <svg id="svg-turkiye-haritasi" viewBox="0 0 1007.478 527.323">
@@ -289,7 +288,7 @@
                 </svg>
               </div>
         </div>
-        <div class="col-md-4">
+        <!-- <div class="col-md-4">
             <h4>Şehir Seçimi</h4>
             <select class="form-select" id="citiesSelect" onchange="showCityDetails()"></select><br>
             <h5>Grafik İçeriği</h5>
@@ -308,17 +307,10 @@
             </div>
             </form><br>
             <canvas id="cityChart" width="400" height="400"></canvas>
-        </div>
+        </div> -->
     </div>
-    <!-- <div class="row">
-      <div class="col-md-12">
-        <canvas id="vaccineChart" width="400" height="400"></canvas>
-      </div>
-    </div> -->
 </body>
 <footer style="text-align: center;margin-bottom:150px;">
-  <a href="https://github.com/mertcelen" target="_blank">github.com/mertcelen</a><br>
-  <small>Siteyi ilk rakamlar açıldığından beri her hafta itina ile güncelleyerek kovid'den kaçarken 22.01.2022 tarihinde bende kovid oldum.</small>
 </footer>
-<script src="https://mertcelen.github.io/kovidsayar/script.js"></script>
+<script src="/script.js"></script>
 </html>

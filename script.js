@@ -1,4 +1,4 @@
-let baseURL = "https://mertcelen.github.io/kovidsayar";
+let baseURL = "https://special-space-halibut-g9xpqgpwrr2w9v7-5500.app.github.dev/";
 let cities = [
     "Tüm Türkiye",
     "Adana",
@@ -115,7 +115,8 @@ function generateDatesSelect(){
         element.appendChild(option);
     }
     
-    element.selectedIndex = element.length - 1;
+    element.value = "Özel Eğitim";
+    // element.selectedIndex = element.length - 1;
 }
 
 async function loadJson(url) {
@@ -125,15 +126,16 @@ async function loadJson(url) {
 }
 
 async function loadCityData(){
-    values.totals = await loadJson("/generated/total/city.json");
-    values.totals['Tüm Türkiye'] = await loadJson("/generated/total/country.json");
-    values.percentages = await loadJson("/generated/percentage/city.json");
-    values.percentages['Tüm Türkiye'] = await loadJson("/generated/percentage/country.json");
-    values.dates = await loadJson("/input/translations.json");
-    values.datesPretty = Object.values(await loadJson("/input/translations-short.json"));
-    values.diffs = await loadJson("/generated/diffs.json");
-    await generateCitiesSelect();
-    showCityDetails();
+    values.data = await loadJson("/generated/2023.json")
+    // values.totals = await loadJson("/generated/total/city.json");
+    // values.totals['Tüm Türkiye'] = await loadJson("/generated/total/country.json");
+    // values.percentages = await loadJson("/generated/percentage/city.json");
+    // values.percentages['Tüm Türkiye'] = await loadJson("/generated/percentage/country.json");
+    values.dates = await loadJson("/input/bolumler.json");
+    // values.datesPretty = Object.values(await loadJson("/input/translations-short.json"));
+    // values.diffs = await loadJson("/generated/diffs.json");
+    // await generateCitiesSelect();
+    // showCityDetails();
     generateDatesSelect();
     showDateDetails();
 }
@@ -194,23 +196,56 @@ function showCityDetails(){
 
 async function showDateDetails(){
     let element = document.getElementById("datesSelect");
-    let current = await loadJson("/generated/percentage/weekly/" + element.value + ".json");
-    for (const [city, value] of Object.entries(current)) {
+    document.querySelectorAll('[data-iladi]').forEach(function(element) {
+        element.setAttribute('data-total', 0);
+        Array.from(element.children).forEach(path => path.style.fill = '#CCCCCC');
+    });
+
+    let tooltip = document.createElement('div');
+    tooltip.style.position = 'absolute';
+    tooltip.style.padding = '5px 10px';
+    tooltip.style.backgroundColor = 'rgba(0,0,0,0.8)';
+    tooltip.style.color = 'white';
+    tooltip.style.borderRadius = '4px';
+    tooltip.style.fontSize = '12px';
+    tooltip.style.pointerEvents = 'none';
+    tooltip.style.zIndex = '9999';
+    tooltip.style.display = 'none';
+    document.body.appendChild(tooltip);
+
+    document.querySelectorAll('[data-iladi]').forEach(function(element) {
+        element.addEventListener('mousemove', function(e) {
+            let il = this.getAttribute('data-iladi');
+            let total = this.getAttribute('data-total') || 0;
+
+            tooltip.style.display = 'block';
+            tooltip.style.left = (e.pageX + 10) + 'px';
+            tooltip.style.top = (e.pageY + 10) + 'px';
+            tooltip.textContent = `${il}: ${total} atama`;
+        });
+
+        element.addEventListener('mouseleave', function() {
+            tooltip.style.display = 'none';
+        });
+    });
+
+    for (const [city, value] of Object.entries(values.data[element.value])) {
         document.querySelectorAll("[data-iladi='"+ city + "']").forEach(function(element){
-            Array.from(element.children).forEach(path => path.style.fill = getRiskColor(value));
+            element.setAttribute('data-total', value.total_appointments);
+            Array.from(element.children).forEach(path => path.style.fill = getRiskColor(value.total_appointments));
         });
       }
 }
 
 function getRiskColor(data){
-    if (data < 20){
-        return '#0d6efd';
-    }else if(data < 50){
-        return '#f0e513';
-    }else if(data < 100){
-        return '#f8931f';
-    }else{
-        return '#df1a23';
+    if (data > 100) {
+        return '#8BB8FF';
+    } else if (data > 50) {
+        return '#FFE663';
+    } else if (data > 20) {
+        return '#FFB366';
+    } else {
+        return '#FF8888';
     }
  }
 
